@@ -60,6 +60,6 @@ namespace ChinookSystem.Entities
         public virtual Artist Artist { get; set; }
 
         //not valid UNTIL the Track entity is coded.
-        //public virtual ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }
