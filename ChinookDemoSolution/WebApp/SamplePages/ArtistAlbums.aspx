@@ -3,7 +3,8 @@
     Inherits="WebApp.SamplePages.ArtistAlbums" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Artist List (ODS)</h1>
-    <asp:GridView ID="ArtistAlbumsList" runat="server" AutoGenerateColumns="False" 
+    <asp:GridView ID="ArtistAlbumsList" runat="server" 
+        AutoGenerateColumns="False" 
         DataSourceID="ArtistAlbumsListODS" AllowPaging="True">
 
         <Columns>
