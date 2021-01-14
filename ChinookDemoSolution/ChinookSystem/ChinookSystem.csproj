@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\AlbumController.cs" />
+    <Compile Include="BLL\ArtistController.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DAL\ChinookSystemContext.cs" />
     <Compile Include="Entities\Album.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="Entities\Track.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ArtistAlbums.cs" />
-    <Compile Include="ViewModels\dummy.cs" />
+    <Compile Include="ViewModels\SelectionList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
