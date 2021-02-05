@@ -117,6 +117,10 @@
                                         href="~/SamplePages/ListViewODSCRUD.aspx"
                                         style="color:black" runat="server">
                                    ODS CRUD using ListView</a>
+                                 <a class="dropdown-item"
+                                        href="~/SamplePages/ODSRepeater.aspx"
+                                        style="color:black" runat="server">
+                                   Displaying Nested Query using ODS and Repeater</a>
                             </div>
                          </li>
                          <li class="nav-item">
