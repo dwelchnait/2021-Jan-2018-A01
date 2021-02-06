@@ -31,9 +31,9 @@
                          ItemType="ChinookSystem.ViewModels.CustomerSupportItem">
                         <ItemTemplate>
                             Name: <%# Item.CustomerName %>&nbsp;&nbsp;
-                            Phone: <%# Item.CustomerName %>&nbsp;&nbsp;
-                             City: <%# Item.CustomerName %>&nbsp;&nbsp;
-                             State: <%# Item.CustomerName %><br />
+                            Phone: <%# Item.Phone %>&nbsp;&nbsp;
+                             City: <%# Item.City %>&nbsp;&nbsp;
+                             State: <%# Item.State %><br />
                         </ItemTemplate>
                     </asp:Repeater>
                 </ItemTemplate>
