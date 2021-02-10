@@ -73,7 +73,10 @@ var resultsgroupbyReport = from x in Albums
 
 //group by an entity
 var groupAlbumsbyArtist = from x in Albums
+							where x.ReleaseYear > 1969 && x.ReleaseYear < 1980
 							group x by x.Artist into gArtistAlbums
+							orderby gArtistAlbums.Key.Name
+							where gArtistAlbums.Count() > 1
 							select new
 							{
 								Artist = gArtistAlbums.Key.Name,
@@ -86,7 +89,7 @@ var groupAlbumsbyArtist = from x in Albums
 														})
 								
 							};
-//groupAlbumsbyArtist.Dump();
+groupAlbumsbyArtist.Dump();
 
 //Create a query which will report the employee and their customer base.
 //List the employee fullname (phone), number of customers in their base.
@@ -95,9 +98,11 @@ var groupAlbumsbyArtist = from x in Albums
 //how to attack this question
 //tips:
 //What is the detail of the query? What is report most on?
-//			Customers
+//			Customers (big pile of data)
+//Is this report one large order report OR many smaller reports
+//          orderby  VS grouping
 //Can I subdivide (group) my details into specific piles? If so, on what?
-//			Employee
+//			Employee  (smaller piles of data)
 //Is there an association between Customers and Employees?
 //          nav property SupportRep
 var groupCustomersOfEmployees = from x in Customers
@@ -117,7 +122,7 @@ var groupCustomersOfEmployees = from x in Customers
 													  State = y.State
 													}
 								};
-groupCustomersOfEmployees.Dump();								
+//groupCustomersOfEmployees.Dump();								
 
 
 
