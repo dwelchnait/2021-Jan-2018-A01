@@ -2,24 +2,28 @@
     AutoEventWireup="true" CodeBehind="ManagePlaylist.aspx.cs" 
     Inherits="WebApp.SamplePages.ManagePlaylist" %>
 
-<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
-
-
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <div>
     <h1>Manage Playlists (UI/UX TRX Sample)</h1>
 </div>
-    <%--Add MessageUserControl--%>
-    <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
-    <div class="row">
-    <div class="col-sm-2">
+<div class="row">
+    <div class="offset-1">
+         <%--Add MessageUserControl--%>
+
+    </div>
+</div>
+   
+
+ <div class="row">
+
+    <div class="offset-1 col-sm-2">
         <asp:Label ID="Label1" runat="server" Text="Artist" ></asp:Label><br />
         <asp:TextBox ID="ArtistName" runat="server"
             Width="150px" placeholder="artist name">
         </asp:TextBox><br />
-        <asp:Button ID="ArtistFetch" runat="server" Text="Fetch" OnClick="ArtistFetch_Click"
-              />
+        <asp:Button ID="ArtistFetch" runat="server" Text="Fetch" 
+            OnClick="ArtistFetch_Click"/>
         <br /><br />
          <asp:Label ID="Label3" runat="server" Text="Genre"></asp:Label><br />
         <asp:DropDownList ID="GenreDDL" runat="server"
@@ -38,7 +42,7 @@
              />
         <br /><br />
     </div>
-    <div class="col-sm-10">
+    <div class="col-sm-9">
         <asp:Label ID="Label5" runat="server" Text="Tracks"></asp:Label>&nbsp;&nbsp;
         <asp:Label ID="TracksBy" runat="server" ></asp:Label>&nbsp;&nbsp;
         <asp:Label ID="SearchArg" runat="server" ></asp:Label><br />
@@ -150,19 +154,18 @@
         <asp:Button ID="PlayListFetch" runat="server" Text="Fetch" OnClick="PlayListFetch_Click" 
             />
 
-        <%--enter 3 linkbuttons for move up, move down and delete--%>
+        <%--enter 3 linkbuttons for move up, move down and delete --%>
         <asp:LinkButton ID="MoveUp" runat="server"
                 CssClass="btn" OnClick="MoveUp_Click"  >
-            <span aria-hidden="true" class="glyphicon glyphicon-chevron-up"></span>
+            <i class="fa fa-chevron-up" style="color:blue; font-size:2em;"></i>&nbsp;
         </asp:LinkButton>&nbsp;&nbsp;
         <asp:LinkButton ID="MoveDown" runat="server"
                 CssClass="btn" OnClick="MoveDown_Click" >
-            <span aria-hidden="true" class="glyphicon glyphicon-chevron-down"></span>
+            <i class="fa fa-chevron-up" style="color:blue; font-size:2em;"></i>&nbsp;
         </asp:LinkButton>&nbsp;&nbsp;
         <asp:LinkButton ID="DeleteTrack" runat="server"
                 CssClass="btn" OnClick="DeleteTrack_Click"  >
-            <span aria-hidden="true" class="glyphicon glyphicon-remove"
-                 style="color:red"></span>
+            <i class="fa fa-times" style="color:red; font-size:2em;"></i>&nbsp;
         </asp:LinkButton>
         <br /><br />
         <asp:GridView ID="PlayList" runat="server" AutoGenerateColumns="False"
@@ -216,17 +219,13 @@
     <asp:ObjectDataSource ID="GenreDDLODS" runat="server" 
         OldValuesParameterFormatString="original_{0}" 
         SelectMethod="List_GenreNames" 
-        TypeName="ChinookSystem.BLL.GenreController"
-
-         >
+        TypeName="ChinookSystem.BLL.GenreController">
     </asp:ObjectDataSource>
    
     <asp:ObjectDataSource ID="TrackSelectionListODS" runat="server" 
         OldValuesParameterFormatString="original_{0}" 
         SelectMethod="List_TracksForPlaylistSelection" 
-        TypeName="ChinookSystem.BLL.TrackController"
-
-         >
+        TypeName="ChinookSystem.BLL.TrackController" >
         <SelectParameters>
             <asp:ControlParameter ControlID="TracksBy" PropertyName="Text" Name="tracksby" Type="String"></asp:ControlParameter>
             <asp:ControlParameter ControlID="SearchArg" PropertyName="Text" Name="arg" Type="String"></asp:ControlParameter>

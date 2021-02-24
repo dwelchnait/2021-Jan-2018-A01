@@ -29,12 +29,6 @@ namespace WebApp.SamplePages
 
           }
 
-        protected void MediaTypeFetch_Click(object sender, EventArgs e)
-        {
-
-                //code to go here
-
-        }
 
         protected void GenreFetch_Click(object sender, EventArgs e)
         {
