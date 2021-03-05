@@ -62,6 +62,10 @@
                         </asp:LinkButton>
                         </td>
                     <td>
+<%--                    hiding a second control within a single column
+                        your code between would still have access to this data for processing
+                        <asp:Label Text='<%# Eval("TrackID") %>' runat="server" ID="TrackIDLabel"
+                            visible="false"></asp:Label>--%>
                         <asp:Label Text='<%# Eval("Name") %>' runat="server" ID="NameLabel" /></td>
                     <td>
                         <asp:Label Text='<%# Eval("Title") %>' runat="server" ID="TitleLabel" /></td>
@@ -119,7 +123,8 @@
                 <table runat="server">
                     <tr runat="server">
                         <td runat="server">
-                            <table runat="server" id="itemPlaceholderContainer" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px; font-family: Verdana, Arial, Helvetica, sans-serif;" border="1">
+                            <table runat="server" id="itemPlaceholderContainer" 
+                                style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px; font-family: Verdana, Arial, Helvetica, sans-serif;" border="1">
                                 <tr runat="server" style="background-color: #E0FFFF; color: #333333;">
                                     <th runat="server">TrackID</th>
                                     <th runat="server">Name</th>
@@ -136,7 +141,10 @@
                         </td>
                     </tr>
                     <tr runat="server">
-                        <td runat="server" style="text-align: center; background-color: #5D7B9D; font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFFFFF">
+                        <td runat="server" style="text-align: center; 
+                                    background-color: #c0c0c0; 
+                                    font-family: Verdana, Arial, Helvetica, sans-serif; 
+                                    color: #FFFFFF">
                             <asp:DataPager runat="server" ID="DataPager1" PageSize="5" PagedControlID="TracksSelectionList">
                                 <Fields>
                                     <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
