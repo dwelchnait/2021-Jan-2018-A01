@@ -43,7 +43,8 @@ namespace ChinookSystem.BLL
             }
         }//eom
         
-        public void Add_TrackToPLaylist(string playlistname, string username, int trackid)
+        public void Add_TrackToPLaylist(string playlistname, string username, int trackid,
+            string song)
         {
             Playlist playlistExists = null;
             PlaylistTrack playlisttrackExists = null;
@@ -64,14 +65,14 @@ namespace ChinookSystem.BLL
                     //setting up an error message
                     brokenRules.Add(new BusinessRuleException<string>("Playlist name is missing. Unable to add track", nameof(playlistname), playlistname));
                 }
-                else if (string.IsNullOrEmpty(username))
+                 if (string.IsNullOrEmpty(username))
                 {
                     //there is a data error
                     //setting up an error message
                     brokenRules.Add(new BusinessRuleException<string>("User name was not supplied", nameof(username), username));
                 }
-                else
-                {
+                //else
+                //{
                     //does the playlist exist?
                     playlistExists = (from x in context.Playlists
                                       where (x.Name.Equals(playlistname)
@@ -90,7 +91,7 @@ namespace ChinookSystem.BLL
                                             Name = playlistname,
                                             UserName = username
                                         };
-                        context.Playlists.Add(playlistExists);
+                        context.Playlists.Add(playlistExists); //stage ONLY!!!!!!!!!!
                         tracknumber = 1;
                     }
                     else
@@ -114,12 +115,57 @@ namespace ChinookSystem.BLL
                         }
                         else
                         {
-                            brokenRules.Add(new BusinessRuleException<string>("Track already on playlist.", nameof(playlisttrackExists.Track.Name), playlisttrackExists.Track.Name));
+                            brokenRules.Add(new BusinessRuleException<string>("Track already on playlist.", nameof(song), song));
                         }
                     }
 
-                    //create/load/ stage the adding of the track
-                }
+                    //create the playlist track
+                    playlisttrackExists = new PlaylistTrack();
+
+                    //load of the playlist track
+                    playlisttrackExists.TrackId = trackid;
+                    playlisttrackExists.TrackNumber = tracknumber;
+
+                    //??????
+                    //what is the playlist id
+                    //if the playlist exists then we know the id
+                    //BUT if the playlist is new, we DO NOT know the id
+
+                    //in one case the id is known BUT in the second case
+                    //    where the new record is ONLY STAGED, NO primary key
+                    //    value has been generated yet.
+                    //if you access the new playlist record the pkey would be 0 (default numeric)
+
+                    //the solution to BOTH of these scenarios is to use
+                    //    navigational properties during the ACTUAL .Add command
+                    //    for the new playlisttrack record
+                    //the entityframework will, on your behave, ensure that the adding
+                    //      of records to the database will be done in the appropriate
+                    //      order AND will add the missing compound primary key value
+                    //      (PlaylistId) to the new playlisttrack record
+
+                    //NOT LIKE this!!!! THIS IS WRONG!!!!!
+                    //context.PlaylistTracks.Add(playlisttrackExists);
+
+                    //INSTEAD, do the staging using the parent.navproperty.Add(xxxx)
+                    playlistExists.PlaylistTracks.Add(playlisttrackExists);
+
+                    //time to commit to sql
+                    //check: are there any errors in this transaction
+                    //brokenRules is a List<Exceptions>
+                    if (brokenRules.Count() > 0)
+                    {
+                        //at least one error was recorded during the processing of the transaction
+                        throw new BusinessRuleCollectionException("Add Playlist Track Concerns:", brokenRules);
+                    }
+                    else
+                    {
+                        //COMMIT THE TRANSACTION
+                        //the ALL the staged records to sql for processing
+                        context.SaveChanges();
+                    }
+
+                //}
                 
              
             }

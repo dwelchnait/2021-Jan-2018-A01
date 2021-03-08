@@ -190,11 +190,16 @@ namespace WebApp.SamplePages
             }
             else
             {
-                //REminder: MessageUserControl will do the error handling
+                //grab a value from the selected ListView row
+                //the row is referred to as e.Item
+                //to access the column use the .FindControl("xx") as crtlType).crtlaccess
+                string song = (e.Item.FindControl("NameLabel") as Label).Text;
+
+                //Reminder: MessageUserControl will do the error handling
                 MessageUserControl.TryRun(() => {
                     PlaylistTracksController sysmgr = new PlaylistTracksController();
                     sysmgr.Add_TrackToPLaylist(PlaylistName.Text, username,
-                        int.Parse(e.CommandArgument.ToString()));
+                        int.Parse(e.CommandArgument.ToString()), song);
                     RefreshPlaylist(sysmgr, username);
                 },"Add Track to Playlist","Track has been added to the playlist");
             }
