@@ -153,7 +153,7 @@ namespace ChinookSystem.BLL
                     //time to commit to sql
                     //check: are there any errors in this transaction
                     //brokenRules is a List<Exceptions>
-                    if (brokenRules.Count() > 0)
+                    if (brokenRules.Count > 0)
                     {
                         //at least one error was recorded during the processing of the transaction
                         throw new BusinessRuleCollectionException("Add Playlist Track Concerns:", brokenRules);
@@ -240,9 +240,23 @@ namespace ChinookSystem.BLL
                     }
 
                     //re-sequence the kept tracks
+                    //option a) use a list and update the records of the list
+                    //option b) delete all children records and re-add only the 
+                    //              necessary kept records
+
+                    //within this example, you will see how to update specific
+                    //    column(s) of a record
+                    int tracknumber = 1;
+                    foreach(var track in trackskept)
+                    {
+                        track.TrackNumber = tracknumber;
+                        context.Entry(track).Property(nameof(PlaylistTrack.TrackNumber)).IsModified = true;  //Staged
+                        tracknumber++;
+                    }
+
 
                     //save the work
-                    if (brokenRules.Count == 0)
+                    if (brokenRules.Count > 0)
                     {
                         throw new BusinessRuleCollectionException("Track Removal Concerns:", brokenRules);
                     }
