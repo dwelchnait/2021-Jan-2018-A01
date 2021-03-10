@@ -170,7 +170,7 @@ namespace ChinookSystem.BLL
              
             }
         }//eom
-        public void MoveTrack(string username, string playlistname, int trackid, int tracknumber, string direction)
+        public void MoveTrack(MoveTrackItem moveTrack)
         {
             using (var context = new ChinookSystemContext())
             {
