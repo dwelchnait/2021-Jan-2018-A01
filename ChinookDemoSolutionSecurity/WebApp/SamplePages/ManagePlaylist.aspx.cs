@@ -8,7 +8,8 @@ using System.Web.UI.WebControls;
 #region Additonal Namespaces
 using ChinookSystem.BLL;
 using ChinookSystem.ViewModels;
-
+using System.Configuration;
+using WebApp.Security;
 #endregion
 
 namespace WebApp.SamplePages
@@ -18,6 +19,38 @@ namespace WebApp.SamplePages
         protected void Page_Load(object sender, EventArgs e)
         {
             TracksSelectionList.DataSource = null;
+            //test our security
+            //are you logged into the system
+            if (Request.IsAuthenticated)
+            {
+                //logged in BUT do you have authority to be on this page
+                if (User.IsInRole(ConfigurationManager.AppSettings["customerRole"]))
+                {
+                    //obtain the CustomerId on the security user record
+                    SecurityController ssysmgr = new SecurityController();
+                    //pass the value of the username to the method GetCurrentCustomerId
+                    //receive the current customer database id
+                    int? customerid = ssysmgr.GetCurrentUserCustomerId(User.Identity.Name);
+
+                    //need to convert the int? to a int value
+                    //int custid = customerid == null ? default(int) : int.Parse(customerid.ToString());
+                    //short hand
+                    int custid = customerid ?? default(int);
+
+                    //use the custid to do a standard lookup against your customer
+                    //    database entity
+
+                    LoggedUser.Text = custid.ToString();
+                }
+                else
+                {
+                    Response.Redirect("~/SamplePages/AccessDenied.aspx");
+                }
+            }
+            else
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
         }
 
         #region Error Handling
@@ -120,7 +153,10 @@ namespace WebApp.SamplePages
             //username is coming from the system via security
             //since security has yet to be installed, a default will be setup for the
             //    username value
-            string username = "HansenB";
+            //string username = "HansenB";
+
+            //security has now been installed
+            string username = User.Identity.Name;
             if (string.IsNullOrEmpty(PlaylistName.Text))
             {
                 MessageUserControl.ShowInfo("Playlist Search", "No palylist name was supplied");
